@@ -1,4 +1,9 @@
-from entities.motor_object import ObiektSilnika
+from app import Applikacja
 
-silnik = ObiektSilnika().transmitancja
-print(silnik)
+
+def main():
+    app = Applikacja()
+
+
+if __name__ == "__main__":
+    main()
