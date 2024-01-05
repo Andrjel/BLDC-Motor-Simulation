@@ -1,41 +1,46 @@
-import numpy as np
-import matplotlib.pyplot as plt
-from scipy import signal
-# Definiowanie transmitancji obiektu
-numerator = [1]  # współczynniki licznika
-denominator = [1, 2, 1]  # współczynniki mianownika
+import threading
+import queue
+import msvcrt
+import time
 
-sys = signal.TransferFunction(numerator, denominator)
+class UserInputThread(threading.Thread):
+    def __init__(self, input_queue):
+        super(UserInputThread, self).__init__()
+        self.input_queue = input_queue
 
-# Parametry symulacji
-dt = 0.01  # krok czasowy
-t_sim = np.arange(0, 10, dt)  # czas symulacji
+    def run(self):
+        while True:
+            if msvcrt.kbhit():
+                user_input = msvcrt.getch().decode('utf-8')
+                self.input_queue.put(user_input)
 
-# Inicjalizacja sygnału wejściowego
-u = np.zeros_like(t_sim)
+            time.sleep(0.1)
 
-# Inicjalizacja sygnału wyjściowego
-y = np.zeros_like(t_sim)
+class SimulationThread(threading.Thread):
+    def __init__(self, input_queue):
+        super(SimulationThread, self).__init__()
+        self.input_queue = input_queue
+        self.previous_input = None
 
-# Pętla symulacyjna
-for i in range(len(t_sim)):
-    # Zczytywanie wartości wejścia od użytkownika (możesz to dostosować do własnych potrzeb)
-    u[i] = float(input(f'Podaj wartość wejścia w kroku {i + 1}: '))
+    def run(self):
+        while True:
+            try:
+                user_input = self.input_queue.get_nowait()
+                self.previous_input = user_input
+                print(f"Symulacja obiektu dla wartości: {self.previous_input}")
+            except queue.Empty:
+                print("Brak nowej wartości do symulacji")
 
-    # Symulacja jednej próbki i pobranie odpowiedzi
-    t, response, _ = signal.lsim(sys, u[:i + 1], t_sim[:i + 1])
+            time.sleep(0.1)
 
-    # Zapisywanie wartości wyjścia
-    y[:i + 1] = response
+if __name__ == "__main__":
+    input_queue = queue.Queue()
 
-    # Wykres wyników w czasie rzeczywistym
-    plt.plot(t, response, label=f'Próbka {i + 1}')
-    plt.xlabel('Czas')
-    plt.ylabel('Odpowiedź obiektu')
-    plt.title('Odpowiedź obiektu w czasie rzeczywistym')
-    plt.legend()
-    plt.grid(True)
-    plt.show(block=False)
-    plt.pause(0.1)  # Pause for a short time to make it visually real-time
+    user_input_thread = UserInputThread(input_queue)
+    simulation_thread = SimulationThread(input_queue)
 
-plt.show()
+    user_input_thread.start()
+    simulation_thread.start()
+
+    user_input_thread.join()
+    simulation_thread.join()
