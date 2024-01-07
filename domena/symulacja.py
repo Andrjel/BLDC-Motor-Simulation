@@ -1,9 +1,6 @@
 from scipy import signal
-
-from encje.kolejka import Kolejka
-from encje.obiekt_silnika import ObiektSilnika
-
-wejscie = None
+from domena.encje.kolejka import Kolejka
+from domena.encje.obiekt_silnika import ObiektSilnika
 
 
 class Symulacja:
@@ -11,14 +8,13 @@ class Symulacja:
     Klasa, która ma za zadanie symulować pracę silnika
     w czasie rzeczywistym
     """
-
     def __init__(self):
         self.__czas_probkowania = 0.002
         self.__silnik = ObiektSilnika().transmitancja
         # [czas, wejście, wyjście]
         self.dane = {"czas": Kolejka(), "wejscie": Kolejka(), "wyjscie": Kolejka()}
 
-    def aktualizacja_symulacji(self):
+    def aktualizacja_symulacji(self, wejscie):
         """
         Aktualizuje symulacje
         """
@@ -35,30 +31,3 @@ class Symulacja:
         Zwraca aktualne wartosci
         """
         return self.dane
-
-def thread_job():
-    global wejscie
-    wejscie = 1
-    sym = Symulacja()
-    while True:
-        sym.aktualizacja_symulacji()
-        plt.plot(sym.dane["czas"].aktualna_kolejka(), sym.dane["wyjscie"].aktualna_kolejka())
-        plt.xlabel("Czas")
-        plt.ylabel("Wyjście")
-        plt.title("Odpowiedź obiektu w czasie rzeczywistym")
-        plt.show(block=False)
-        plt.pause(0.1)
-
-if __name__ == "__main__":
-    sym = Symulacja()
-    from matplotlib import pyplot as plt
-    import threading
-    t = threading.Thread(target=thread_job)
-    t.start()
-    try:
-        while True:
-            wejscie = float(input("Podaj wejście: "))
-    except KeyboardInterrupt:
-        plt.close()
-        exit(0)
-
