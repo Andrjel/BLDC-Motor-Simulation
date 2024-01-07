@@ -1,58 +1,50 @@
 import time
 from domena.symulacja import Symulacja
-from matplotlib import pyplot as plt
 
 
 class Aplikacja:
     """
     Główna klasa kontrolująca aplikacje
     """
-    akt_wartosc = 0
-    poprzed_wartosc = None
-
     def __init__(self):
         self.__symulacja = Symulacja()
+        self.akt_wartosc = 0
+        self.poprzed_wartosc = 0
+        self.__kontrola_watku = True
 
     def glowna_petla(self):
         """
         Główna pętla aplikacji
         """
         import threading
-        t = threading.Thread(target=self.thread_job)
+        t = threading.Thread(target=self.watek_symulacji)
         t.start()
-        try:
-            while True:
-                self.akt_wartosc = float(input("Podaj wejście: "))
-                if self.poprzed_wartosc != self.akt_wartosc:
-                    self.poprzed_wartosc = self.akt_wartosc
-                if not (0 <= self.akt_wartosc <= 255):
-                    print(self.__symulacja.aktualne_wartosci()["czas"].aktualna_kolejka(),
-                          self.__symulacja.aktualne_wartosci()["wejscie"].aktualna_kolejka(),
-                          self.__symulacja.aktualne_wartosci()["wyjscie"].aktualna_kolejka(),
-                          sep="\n")
-        except KeyboardInterrupt:
-            exit(0)
+        while True:
+            wartosc_pwm = input("Podaj wartość PWM (0-255): ")
+            if wartosc_pwm.isdigit() and 0 <= int(wartosc_pwm) <= 255:
+                self.akt_wartosc = (int(wartosc_pwm) / 255) * 5
+            elif wartosc_pwm == "q":
+                self.__kontrola_watku = False
+                t.join()
+                break
+            elif wartosc_pwm == "data":
+                self.__kontrola_watku = False
+                t.join()
+                print(self.__symulacja.aktualne_wartosci()["czas"].aktualna_kolejka(),
+                      self.__symulacja.aktualne_wartosci()["wejscie"].aktualna_kolejka(),
+                      self.__symulacja.aktualne_wartosci()["wyjscie"].aktualna_kolejka(),
+                      sep="\n")
+                self.__kontrola_watku = True
+                t = threading.Thread(target=self.watek_symulacji)
+                t.start()
+            else:
+                print("Podaj liczbę z zakresu 0-255")
+                continue
 
-    def thread_job(self):
+    def watek_symulacji(self):
         """
         Funkcja wykonywana w osobnym wątku
         """
-        while True:
-            if not (0 <= self.akt_wartosc <= 255):
-                print("Zakończono symulacje")
-                break
+        while self.__kontrola_watku:
             self.__symulacja.aktualizacja_symulacji(self.akt_wartosc)
 
-
-# if __name__ == "__main__":
-#     sym = Symulacja()
-#     from matplotlib import pyplot as plt
-#     import threading
-#     t = threading.Thread(target=thread_job)
-#     t.start()
-#     try:
-#         while True:
-#             wejscie = float(input("Podaj wejście: "))
-#     except KeyboardInterrupt:
-#         plt.close()
-#         exit(0)
