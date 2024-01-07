@@ -1,3 +1,4 @@
+import numpy
 from scipy import signal
 from domena.encje.kolejka import Kolejka
 from domena.encje.obiekt_silnika import ObiektSilnika
