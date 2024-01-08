@@ -21,7 +21,7 @@ class SenseHatController(SenseHat):
         """
         if predkosc_silnika < 10:
             return
-        opoznienie = 1 // predkosc_silnika
+        opoznienie = 1 / predkosc_silnika
 
         self.__stan += 1 if self.__stan + 1 < 21 else -19
         self.__silnik_obrot = STANY[self.__stan]
