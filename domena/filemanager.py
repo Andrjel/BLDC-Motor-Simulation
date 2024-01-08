@@ -16,6 +16,6 @@ class FileManager:
         with open(path + file_name, "w") as file:
             file.write("czas,wejscie,wyjscie\n")
             for i in range(len(data.dane["czas"].aktualna_kolejka())):
-                file.write(str(data.dane["czas"].aktualna_kolejka()[i]) + ";")
-                file.write(str(data.dane["wejscie"].aktualna_kolejka()[i]) + ";")
+                file.write(str(data.dane["czas"].aktualna_kolejka()[i]) + ",")
+                file.write(str(data.dane["wejscie"].aktualna_kolejka()[i]) + ",")
                 file.write(str(data.dane["wyjscie"].aktualna_kolejka()[i]) + "\n")

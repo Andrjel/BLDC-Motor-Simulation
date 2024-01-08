@@ -1,6 +1,8 @@
 import time
 from domena.symulacja import Symulacja
 from domena.filemanager import FileManager
+import os
+from domena.sense_hat_controller import SenseHatController
 
 
 class Aplikacja:
@@ -8,6 +10,8 @@ class Aplikacja:
     Główna klasa kontrolująca aplikacje
     """
     def __init__(self):
+        if os.uname() == "Linux":
+            self.__sense_hat = SenseHatController()
         self.__symulacja = Symulacja()
         self.akt_wartosc = 0
         self.poprzed_wartosc = 0
