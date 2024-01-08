@@ -13,7 +13,7 @@ class SenseHatController(SenseHat):
         r = (200, 0, 0)
         e = (0, 0, 0)
 
-        self.__silnik = np.array([
+        self.__silnik_obrot = np.array([
             [e, e, w, w, w, w, e, e],
             [e, w, e, e, e, e, w, e],
             [w, e, e, e, e, e, e, w],
@@ -23,7 +23,8 @@ class SenseHatController(SenseHat):
             [e, w, e, e, e, e, w, e],
             [e, e, w, w, w, w, e, e]
         ])
-        self.set_pixels(self.__silnik.flatten().tolist())
+        self.przygotowanie_silnika_do_wyswietlenia()
+        self.set_pixels(self.__silnik_do_wyswietlenia)
 
     def obrot_silnika(self, predkosc_silnika):
         """
@@ -34,11 +35,18 @@ class SenseHatController(SenseHat):
         opoznienie = 1 // predkosc_silnika
 
         self.__silnik = np.rot90(self.__silnik, self.__kat % 360 // 45)
-        self.set_pixels(self.__silnik.flatten().tolist())
+        self.przygotowanie_silnika_do_wyswietlenia()
+        self.set_pixels(self.__silnik_do_wyswietlenia)
         time.sleep(opoznienie)
         self.__kat += 1
         if self.__kat > 360:
             self.__kat = 0
+
+    def przygotowanie_silnika_do_wyswietlenia(self):
+        """
+        wyplaszcza macierz silnika do wizualizacji
+        """
+        self.__silnik_do_wyswietlenia = [j for i in self.__silnik.tolist() for j in i]
 
 
 if __name__ == "__main__":
