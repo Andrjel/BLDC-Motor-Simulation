@@ -1,5 +1,6 @@
 import time
 from domena.symulacja import Symulacja
+from domena.filemanager import FileManager
 
 
 class Aplikacja:
@@ -37,6 +38,13 @@ class Aplikacja:
                 self.__kontrola_watku = True
                 t = threading.Thread(target=self.watek_symulacji)
                 t.start()
+            elif wartosc_pwm == "save":
+                self.__kontrola_watku = False
+                t.join()
+                FileManager.write_file(self.__symulacja)
+                self.__kontrola_watku = True
+                t = threading.Thread(target=self.watek_symulacji)
+                t.start()
             else:
                 print("Podaj liczbę z zakresu 0-255")
                 continue
@@ -47,4 +55,3 @@ class Aplikacja:
         """
         while self.__kontrola_watku:
             self.__symulacja.aktualizacja_symulacji(self.akt_wartosc)
-
