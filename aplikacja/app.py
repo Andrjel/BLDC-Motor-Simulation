@@ -59,3 +59,4 @@ class Aplikacja:
         """
         while self.__kontrola_watku:
             self.__symulacja.aktualizacja_symulacji(self.akt_wartosc)
+            self.__sense_hat.obrot_silnika(self.__symulacja.aktualne_wartosci()["wyjscie"].ostatnia_wartosc())
