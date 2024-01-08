@@ -10,7 +10,7 @@ class Aplikacja:
     Główna klasa kontrolująca aplikacje
     """
     def __init__(self):
-        if os.uname() == "Linux":
+        if os.uname()[0] == "Linux":
             self.__sense_hat = SenseHatController()
         self.__symulacja = Symulacja()
         self.akt_wartosc = 0

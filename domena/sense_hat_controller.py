@@ -14,8 +14,8 @@ class SenseHatController(SenseHat):
             e, e, w, w, w, w, e, e,
             e, w, e, e, e, e, w, e,
             w, e, e, e, e, e, e, w,
-            r, e, e, e, e, e, e, w,
             w, e, e, e, e, e, e, w,
+            w, e, e, e, e, e, e, r,
             w, e, e, e, e, e, e, w,
             e, w, e, e, e, e, w, e,
             e, e, w, w, w, w, e, e
