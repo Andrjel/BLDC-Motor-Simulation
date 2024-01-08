@@ -8,6 +8,7 @@ class SenseHatController(SenseHat):
         super().__init__()
         self.clear()
         self.__kat = 0
+        self.__silnik_do_wyswietlenia = []
         # tworzenie silnika na macierzy LED
         w = (150, 150, 150)
         r = (200, 0, 0)
@@ -34,7 +35,7 @@ class SenseHatController(SenseHat):
             return
         opoznienie = 1 // predkosc_silnika
 
-        self.__silnik = np.rot90(self.__silnik, self.__kat % 360 // 45)
+        self.__silnik_obrot = np.rot90(self.__silnik_obrot, self.__kat % 360 // 45)
         self.przygotowanie_silnika_do_wyswietlenia()
         self.set_pixels(self.__silnik_do_wyswietlenia)
         time.sleep(opoznienie)
@@ -46,7 +47,7 @@ class SenseHatController(SenseHat):
         """
         wyplaszcza macierz silnika do wizualizacji
         """
-        self.__silnik_do_wyswietlenia = [j for i in self.__silnik.tolist() for j in i]
+        self.__silnik_do_wyswietlenia = [j for i in self.__silnik_obrot.tolist() for j in i]
 
 
 if __name__ == "__main__":
