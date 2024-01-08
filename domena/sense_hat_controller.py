@@ -21,3 +21,9 @@ class SenseHatController(SenseHat):
             e, e, w, w, w, w, e, e
         ]
         self.set_pixels(image)
+
+
+if __name__ == "__main__":
+    print("To jest moduł sense_hat_controller.py")
+    print("Uruchom plik aplikacja/app.py")
+    SenseHatController()
