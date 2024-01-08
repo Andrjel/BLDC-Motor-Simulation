@@ -23,7 +23,7 @@ class SenseHatController(SenseHat):
             [e, w, e, e, e, e, w, e],
             [e, e, w, w, w, w, e, e]
         ])
-        self.set_pixels(self.__silnik.tolist())
+        self.set_pixels(self.__silnik.flatten().tolist())
 
     def obrot_silnika(self, predkosc_silnika):
         """
@@ -34,7 +34,7 @@ class SenseHatController(SenseHat):
         opoznienie = 1 // predkosc_silnika
 
         self.__silnik = np.rot90(self.__silnik, self.__kat % 360 // 45)
-        self.set_pixels(self.__silnik.tolist())
+        self.set_pixels(self.__silnik.flatten().tolist())
         time.sleep(opoznienie)
         self.__kat += 1
         if self.__kat > 360:
