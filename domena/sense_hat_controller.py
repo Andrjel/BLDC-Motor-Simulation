@@ -15,11 +15,11 @@ class SenseHatController(SenseHat):
         self.przygotowanie_silnika_do_wyswietlenia()
         self.set_pixels(self.__silnik_do_wyswietlenia)
 
-    def obrot_silnika(self, poprzedni_czas, poprzednia_predkosc, aktualny_czas, aktualna_predkosc):
+    def obrot_silnika(self, poprzednia_wartosc, aktualna_wartosc):
         """
         obraca silnik o zadana predkosc
         """
-        predkosc_silnika = aktualna_predkosc
+        _, predkosc_silnika = aktualna_wartosc
         if predkosc_silnika < 10:
             return
         opoznienie = 1 / predkosc_silnika / 60
