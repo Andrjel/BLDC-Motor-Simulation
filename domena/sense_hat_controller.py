@@ -25,10 +25,10 @@ class SenseHatController(SenseHat):
 
         self.__kat += self.obliczenie_obrotu(czas_poprzedni,
                                              czas_aktualny,
-                                             predkosc_silnika_poprzednia,
-                                             predkosc_silnika_aktualna)
+                                             predkosc_silnika_poprzednia / 60,
+                                             predkosc_silnika_aktualna / 60)
         # kat nie moze byc wiekszy od 360
-        self.__kat = int(self.__kat) % 360
+        self.__kat = self.__kat if self.__kat < 360 else self.__kat - 360
         # zaleznie od kata 0 -360 wybieramy odpowiedni stan od 1 do 20
         self.__stan = int(self.__kat / 18) + 1
 
