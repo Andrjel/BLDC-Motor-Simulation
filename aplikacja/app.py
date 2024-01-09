@@ -14,7 +14,6 @@ class Aplikacja:
             self.__sense_hat = SenseHatController()
         self.__symulacja = Symulacja()
         self.akt_wartosc = 0
-        self.poprzed_wartosc = 0
         self.__kontrola_watku = True
 
     def glowna_petla(self):
@@ -59,4 +58,7 @@ class Aplikacja:
         """
         while self.__kontrola_watku:
             self.__symulacja.aktualizacja_symulacji(self.akt_wartosc)
-            self.__sense_hat.obrot_silnika(self.__symulacja.dane["wyjscie"].ostatnia_wartosc())
+            self.__sense_hat.obrot_silnika((self.__symulacjia.dane["czas"].aktualna_kolejka()[-2],
+                                            self.__symulacja.dane["wyjscie"].aktualna_kolejka()[-2]),
+                                           (self.__symulacja.dane["czas"].aktualna_kolejka()[-1],
+                                            self.__symulacja.dane["wyjscie"].aktualna_kolejka()[-1]))
