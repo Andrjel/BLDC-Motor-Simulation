@@ -4,7 +4,7 @@ class Kolejka:
     """
     def __init__(self, maksymalny_rozmiar: int = 1000):
         self.maksymalny_rozmiar = maksymalny_rozmiar
-        self.__kolejka = [0, 0]
+        self.__kolejka = [0]
 
     def dodanie_do_kolejki(self, element):
         """

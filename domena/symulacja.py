@@ -18,6 +18,9 @@ class Symulacja:
                      "wejscie": Kolejka(),
                      "wyjscie": Kolejka()
                      }
+        self.dane["czas"].dodanie_do_kolejki(self.__czas_probkowania)
+        self.dane["wejscie"].dodanie_do_kolejki(0)
+        self.dane["wyjscie"].dodanie_do_kolejki(0)
 
     def aktualizacja_symulacji(self, wejscie):
         """
