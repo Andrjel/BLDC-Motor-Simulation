@@ -28,9 +28,9 @@ class SenseHatController(SenseHat):
                                              predkosc_silnika_poprzednia * 60,
                                              predkosc_silnika_aktualna * 60)
         # kat nie moze byc wiekszy od 360
-        self.__kat = self.__kat if self.__kat < 360 else self.__kat - 360
+        self.__kat = int(self.__kat) % 360
         # zaleznie od kata 0 -360 wybieramy odpowiedni stan od 1 do 20
-        self.__stan = int(self.__kat / 18) + 1
+        self.__stan = self.__kat / 18 + 1
 
         self.__silnik_obrot = STANY[self.__stan]
         self.przygotowanie_silnika_do_wyswietlenia()
