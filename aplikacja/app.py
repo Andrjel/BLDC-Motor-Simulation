@@ -58,7 +58,7 @@ class Aplikacja:
         """
         while self.__kontrola_watku:
             self.__symulacja.aktualizacja_symulacji(self.akt_wartosc)
-            self.__sense_hat.obrot_silnika((self.__symulacjia.dane["czas"].aktualna_kolejka()[-2],
+            self.__sense_hat.obrot_silnika((self.__symulacja.dane["czas"].aktualna_kolejka()[-2],
                                             self.__symulacja.dane["wyjscie"].aktualna_kolejka()[-2]),
                                            (self.__symulacja.dane["czas"].aktualna_kolejka()[-1],
                                             self.__symulacja.dane["wyjscie"].aktualna_kolejka()[-1]))
