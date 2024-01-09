@@ -35,9 +35,9 @@ class Aplikacja:
             elif wartosc_pwm == "data":
                 self.__kontrola_watku = False
                 t.join()
-                print(self.__symulacja.aktualne_wartosci()["czas"].aktualna_kolejka(),
-                      self.__symulacja.aktualne_wartosci()["wejscie"].aktualna_kolejka(),
-                      self.__symulacja.aktualne_wartosci()["wyjscie"].aktualna_kolejka(),
+                print(self.__symulacja.dane["czas"].aktualna_kolejka(),
+                      self.__symulacja.dane["wejscie"].aktualna_kolejka(),
+                      self.__symulacja.dane["wyjscie"].aktualna_kolejka(),
                       sep="\n")
                 self.__kontrola_watku = True
                 t = threading.Thread(target=self.watek_symulacji)
@@ -45,7 +45,7 @@ class Aplikacja:
             elif wartosc_pwm == "save":
                 self.__kontrola_watku = False
                 t.join()
-                FileManager.write_file(self.__symulacja)
+                FileManager.zapisz_dane(self.__symulacja)
                 self.__kontrola_watku = True
                 t = threading.Thread(target=self.watek_symulacji)
                 t.start()
@@ -59,4 +59,4 @@ class Aplikacja:
         """
         while self.__kontrola_watku:
             self.__symulacja.aktualizacja_symulacji(self.akt_wartosc)
-            self.__sense_hat.obrot_silnika(self.__symulacja.aktualne_wartosci()["wyjscie"].ostatnia_wartosc())
+            self.__sense_hat.obrot_silnika(self.__symulacja.dane["wyjscie"].ostatnia_wartosc())

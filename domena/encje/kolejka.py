@@ -8,7 +8,7 @@ class Kolejka:
 
     def dodanie_do_kolejki(self, element):
         """
-        Dodaje element do kolejki
+        Dodaje element na koniec kolejki
         """
         if len(self.__kolejka) >= self.maksymalny_rozmiar:
             self.__kolejka.pop(0)

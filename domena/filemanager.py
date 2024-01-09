@@ -5,7 +5,7 @@ import os
 
 class FileManager:
     @staticmethod
-    def write_file(data: Symulacja):
+    def zapisz_dane(data: Symulacja):
         """
         zapisuje aktualne dane symulacji do pliku
         """

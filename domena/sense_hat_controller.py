@@ -19,8 +19,6 @@ class SenseHatController(SenseHat):
         """
         obraca silnik o zadana predkosc
         """
-        if predkosc_silnika < 10:
-            return
         opoznienie = 1 / predkosc_silnika
 
         self.__stan += 1 if self.__stan + 1 < 21 else -19
