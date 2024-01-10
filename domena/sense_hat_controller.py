@@ -27,11 +27,8 @@ class SenseHatController(SenseHat):
                                              czas_aktualny,
                                              predkosc_silnika_poprzednia,
                                              predkosc_silnika_aktualna)
-        # kat nie moze byc wiekszy od 360
         self.__kat = self.__kat if self.__kat < 360 else self.__kat - 360
-        # zaleznie od kata 0 -360 wybieramy odpowiedni stan od 1 do 20
         self.__stan = int(self.__kat / 18) + 1
-
         self.__silnik_obrot = STANY[self.__stan]
         self.przygotowanie_silnika_do_wyswietlenia()
         self.set_pixels(self.__silnik_do_wyswietlenia)
@@ -43,12 +40,16 @@ class SenseHatController(SenseHat):
         """
         self.__silnik_do_wyswietlenia = [j for i in self.__silnik_obrot.tolist() for j in i]
 
-    def obliczenie_obrotu(self, czas_poprzedni, czas_aktualny, predkosc_silnika_poprzednia, predkosc_silnika_aktualna):
+    def obliczenie_obrotu(self, czas_poprzedni,
+                          czas_aktualny,
+                          predkosc_silnika_poprzednia,
+                          predkosc_silnika_aktualna):
         """
         oblicza obrot silnika
         """
         delta_czas = czas_aktualny - czas_poprzedni
-        return (predkosc_silnika_poprzednia + predkosc_silnika_aktualna) / 2 * delta_czas
+        return ((predkosc_silnika_poprzednia + predkosc_silnika_aktualna)
+                / 2 * delta_czas)
 
 
 if __name__ == "__main__":
